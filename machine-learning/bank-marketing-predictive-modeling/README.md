@@ -77,5 +77,6 @@ Clustering, GridSearchCV, Feature Engineering, PCA
 - `Predictive_Modeling_Bank_Marketing.ipynb` — full analysis and code
 
 ---
-Part of [Data Science Portfolio](https://github.com/rajesh-k07/data-science-portfolio/tree/main) 
+Part of [Data Science Portfolio](https://github.com/rajesh-k07/data-science-portfolio/tree/main)
+
 **Main site:** [rajesh-k07.github.io](https://rajesh-k07.github.io)
