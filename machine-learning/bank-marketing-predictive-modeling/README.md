@@ -74,7 +74,7 @@ customers.
 Clustering, GridSearchCV, Feature Engineering, PCA
 
 ## Files in this folder
-- `notebook.ipynb` — full analysis and code
+- `Predictive_Modeling_Bank_Marketing.ipynb` — full analysis and code
 
 ---
 Part of my [Data Science Portfolio](https://rajesh-k07.github.io)
