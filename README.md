@@ -32,6 +32,15 @@ README summarizing the problem, approach, and results.
   segments demand behavior across different conditions.
   `Python` `scikit-learn` `Random Forest` `K-Means`
 
+- **[Tetouan Power Grid: Forecasting Electricity Consumption](machine-learning/tetouan-electricity-forecasting/)**
+  A Multi-Output Random Forest Regressor predicting power consumption across
+  three grid zones using weather, calendar, and recent-consumption features,
+  cross-checked against a SARIMA model forecasting each zone independently.
+
+  A **t-test** confirms weekday/weekend consumption differs significantly across
+  all three zones.
+  `Python` `scikit-learn` `statsmodels` `Random Forest` `SARIMA`
+
 ## NLP
 
 - **[Women's E-Commerce Sentiment Analysis and Product Rating](nlp/ecommerce-sentiment-analysis/)**
