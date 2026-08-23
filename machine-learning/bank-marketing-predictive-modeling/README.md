@@ -19,8 +19,7 @@ UCI Machine Learning Repository — nearly 45,000 direct marketing phone contact
 made by a Portuguese bank. Target "y": has the client subscribed a term deposit?
 (binary: "yes","no")
 
-**Citation:** Moro, S., Cortez, P., & Rita. P. (2012, Feb 13). *Bank marketing*. 
-UCI irvine machine learning repository. https://archive.ics.uci.edu/dataset/222/bank+marketing
+Dataset: https://archive.ics.uci.edu/dataset/222/bank+marketing
 
 ## Data Cleaning
 - Dropped 'poutcome' and 'duration' columns
