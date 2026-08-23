@@ -1,0 +1,115 @@
+---
+output: github_document
+---
+<!-- Note: this file renders to statistical_significance_testing.md — view that file for charts and output -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Include libraries
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(e1071)
+library(ggradar)
+library(car)
+```
+### load travel_insurance.csv file
+```{r message=FALSE, warning=FALSE}
+# sample file is saved in current directory.
+options(width = 100) 
+travel_data= readr::read_csv('travel_insurance.csv', col_names=TRUE)
+
+# Dataframe concise summary
+glimpse(travel_data)
+```
+### One‑Way ANOVA: Net Sales ~ Agency
+
+We are going to create One-Way ANOVA for Net Sales and Agency.
+
+Agency is the factor and Net Sales is the dependent variable. 
+
+aov() uses Type-I of sum of squares, ***since in One-Way ANOVA all Types-I, II, and III will give the same result.***
+
+```{r message=FALSE, warning=FALSE}
+# dropping NAs and keeping only relevant columns
+travel_data_aov <- na.omit( travel_data[, c("Agency", "Gender", "Net Sales")] )
+
+# Rename columns so we do not need backticks.
+names(travel_data_aov)[names(travel_data_aov) == "Net Sales"] <- "Net_Sales"
+
+# Ensure grouping variables are factors
+travel_data_aov$Agency <- factor(travel_data_aov$Agency)
+travel_data_aov$Gender <- factor(travel_data_aov$Gender)
+
+
+# One‑way ANOVA: Net_Sales ~ Agency
+oneway_aov <- aov(formula = Net_Sales ~ Agency, data = travel_data_aov)
+
+# Compute AIC for one-way ANOVA
+oneway_lm <- lm(Net_Sales ~ Agency, data = travel_data_aov)
+oneway_aic <- AIC(oneway_lm)
+
+oneway_aov_txt <- capture.output(summary(oneway_aov))
+
+# Show the one-way ANOVA result and AIC
+cat("One‑way ANOVA: Net_Sales ~ Agency \n\n", paste(oneway_aov_txt, collapse = "\n"))
+cat("One‑way model AIC:", oneway_aic)
+```
+F value (F‑statistic) = 186.4 and Pr(>F) (P‑value)=<2×10⁻¹⁶ are statistically highly significant.
+
+**The differences in mean Net Sales across the 14 agencies are far larger than we would expect by chance, so we can confidently reject the null hypothesis of equal means.**
+
+
+### Two‑way ANOVA: Net Sales ~ Agency * Gender
+
+We are going to create Two-Way ANOVA for Net Sales, Agency and Gender .
+
+Agency and Gender are the factors and Net Sales is the dependent variable. 
+
+***We will check if observations in subjects are balanced or unbalanced.***
+```{r message=FALSE, warning=FALSE}
+
+# Cross‑tabulate Agency by Gender
+observation_counts <- table(Agency = travel_data_aov$Agency, Gender = travel_data_aov$Gender)
+print(observation_counts)
+```
+***Two‑way design is UnBalanced, here cell counts are vary, so we will use Type-III of sum of squares.***
+
+```{r message=FALSE, warning=FALSE}
+
+# Set sum-to-zero contrasts
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# Fit the linear model (not aov) with contr.sum for factors
+twoway_lm <- lm( Net_Sales ~ Agency * Gender, data = travel_data_aov)
+
+# Two‑way ANOVA using Type-III: Net Sales ~ Agency * Gender
+Anova(twoway_lm, type = "III") 
+
+# Compute AIC for two-way ANOVA
+twoway_aic <- AIC(twoway_lm)
+cat("Two‑way model AIC:", twoway_aic, "\n\n")
+```
+Agency (main effect): F=181.41, p<2.2×10⁻¹⁶ is highly significant.
+
+Gender (main effect): F=0.055, p=0.8143 is not significant.
+
+Agency×Gender (interaction): F=2.345, p=0.0040 significant.
+
+***Intercept: The baseline mean Net_Sales (when all factors are at their reference level) is significantly different from zero (F=319.94, p<2.2×10⁻¹⁶)***
+
+
+
+### AIC Comparison
+```{r message=FALSE, warning=FALSE}
+if (oneway_aic < twoway_aic) {
+  cat("One‑way ANOVA is preferred (lower AIC).\n")
+} else if (twoway_aic < oneway_aic) {
+  cat("Two‑way ANOVA is preferred (lower AIC).\n")
+} else {
+  cat("AICs are identical; both models are equally supported.\n")
+}
+```
+Since the two‑way AIC is lower by about 11.7 points, that’s a substantial improvement.
+
+The Akaike Information Criterion (AIC) is a metric for comparing statistical models on the basis of both their goodness of fit and their complexity.
