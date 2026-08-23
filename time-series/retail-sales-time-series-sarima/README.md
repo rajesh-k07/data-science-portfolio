@@ -1,15 +1,15 @@
 # Time Series Modeling on US Retail Sales
 
+## About the Data
+Almost 30 years of US retail history (1992–2021). A consistent upward trend shows a growing economy over 30 years, with an increase in sales at the end of the year from holiday shopping in November and December.
+
+Sharp dip in sales during 2008 to 2010 — the financial crisis and recession, taking 3 years for sales to recover. Sharp drop in early 2020 during COVID-19 and lockdowns, then sales shot up faster in 2021 once vaccines became available.
+
 ## Data Preparation
 - Dataframe was in Wide Format where months are the columns. Converted to Long Format (every row a single point in time and a sales value) using `pd.melt`.
 - Combined Year and Month columns into a new "Date" column.
 - Sorted by Date, reset index, dropped NaN values.
 - Kept only Date and Sales columns.
-
-## About the Data
-Almost 30 years of US retail history (1992–2021). A consistent upward trend shows a growing economy over 30 years, with an increase in sales at the end of the year from holiday shopping in November and December.
-
-Sharp dip in sales during 2008 to 2010 — the financial crisis and recession, taking 3 years for sales to recover. Sharp drop in early 2020 during COVID-19 and lockdowns, then sales shot up faster in 2021 once vaccines became available.
 
 ## Train/Test Split
 Time Series Modeling requires data in a chronological sequence, so shuffling was avoided.
