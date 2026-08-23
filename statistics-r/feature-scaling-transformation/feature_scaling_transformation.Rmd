@@ -1,0 +1,133 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### load libraries
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(e1071)
+library(gridExtra)
+
+```
+### load vgchartz-2024.csv file
+```{r}
+# read_csv only 
+vgchartz_2024 <- readr::read_csv('vgchartz-2024.csv', col_names = TRUE, show_col_types= FALSE)
+
+# Dataframe concise summary
+glimpse(vgchartz_2024)
+
+# Let's check the skewness and mean for features that have numerical values 
+skews <- apply(vgchartz_2024[, 7:12], 2, skewness, na.rm = TRUE)
+mean <- apply(vgchartz_2024[, 7:12], 2, mean, na.rm = TRUE)
+
+skews # skewness for numeric features
+```
+**We can see high positive skewness in total_sales, na_sales, jp_sales, pal_sales, other_sales, and negative skewness for critic_score.
+We can draw histogram for total_sales and na_sales features, and visualize the skewness.**
+```{r}
+p_ts <- ggplot(data=vgchartz_2024, mapping = aes(x = total_sales, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "lightblue", color = 4) +
+  labs(x = "Total Sales", y = "Histogram Count", title = "Total Sales- Histogram Count") 
+
+# Total Sales
+p_ts
+
+
+p_na <- ggplot(data=vgchartz_2024, mapping = aes(x = na_sales, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "yellowgreen", color = 4) +
+  labs(x = "NA Sales", y = "Histogram Count", title = "NA Sales- Histogram Count") 
+
+# NA Sales
+p_na
+
+```
+
+### Scaling
+**We will scale the numeric features using Min-Max scale.**
+
+*In scaling, we are changing the range of our data*
+```{r}
+# min_max scale function, min range is 0.01 because we will use log method for normalization.
+# log transformation is valid only positive values.
+# It is used for power-law distributed data.
+
+# min = 0.01 and max = 1
+min_max_scale <- function(x, new_min = 0.01, new_max = 1) {
+  scaled <- (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+  scaled * (new_max - new_min) + new_min
+}
+
+
+# Scales datafrane using min_max_scale
+vgchartz_2024_scaled <- as.data.frame(lapply(vgchartz_2024[, sapply(vgchartz_2024, is.numeric)], min_max_scale))
+
+# Scaled dataframe concise summary
+glimpse(vgchartz_2024_scaled)
+
+# skewness of scaled dataframe. skewness will remain same, since it is not normalized yet
+skews_sc <- apply(vgchartz_2024_scaled[, 1:6], 2, skewness, na.rm = TRUE)
+
+# Min and Max value of features after scaling
+min_sc <- apply(vgchartz_2024_scaled[, 1:6], 2, min, na.rm = TRUE)
+max_sc <- apply(vgchartz_2024_scaled[, 1:6], 2, max, na.rm = TRUE)
+```
+### Scaled values min and max for numerics features
+```{r}
+# Minimum value of scaled features
+min_sc
+
+# Maximum value of scaled features
+max_sc
+```
+### Fix the skewness using Log method.
+```{r}
+vgchartz_2024_scaled$total_sale_lg <- log(vgchartz_2024_scaled$total_sales) 
+vgchartz_2024_scaled$na_sale_lg <- log(vgchartz_2024_scaled$na_sales) 
+vgchartz_2024_scaled$jp_sale_lg <- log(vgchartz_2024_scaled$jp_sales) 
+vgchartz_2024_scaled$pal_sale_lg <- log(vgchartz_2024_scaled$pal_sales) 
+```
+### Fix the skewness using Square Root method.
+```{r}
+# Fix the skewness using sqrt method.
+vgchartz_2024_scaled$other_sale_sq <- sqrt(vgchartz_2024_scaled$other_sales) 
+
+# Skewness for numerics features after normalization.
+skews_sc_norm <- apply(vgchartz_2024_scaled[, 7:11], 2, skewness, na.rm = TRUE)
+```
+_**In Normalization, we are changing the shape of the distribution of our data.**_
+```{r}
+skews_sc  # skewness before normalization
+skews_sc_norm # skewness after normalization using log and sqrt methods
+```
+
+```{r}
+p_ts_lg <- ggplot(data=vgchartz_2024_scaled, mapping = aes(x = total_sale_lg, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "bisque1", color = 4) +
+  labs(x = "Total Sales  (log)", y = "Histogram Count", title = "Total Sales (log)- Histogram Count- Normalization") 
+
+p_na_lg <- ggplot(data=vgchartz_2024_scaled, mapping = aes(x = na_sale_lg, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "steelblue2", color = 4) +
+  labs(x = "NA Sales  (log)", y = "Histogram Count", title = "NA Sales  (log)- Histogram Count- Normalization") 
+
+p_ots <- ggplot(data=vgchartz_2024, mapping = aes(x = other_sales, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "seagreen1", color = 4) +
+  labs(x = "Other Sales", y = "Histogram Count", title = "Other Sales - Histogram Count") 
+
+p_ots_sq <- ggplot(data=vgchartz_2024_scaled, mapping = aes(x = other_sale_sq, na.rm = TRUE)) +
+  geom_histogram(bins = 40, fill = "lightsalmon2", color = 4) +
+  labs(x = "Other Sales  (Sqrt)", y = "Histogram Count", title = "Other Sales  (Sqrt)- Histogram Count- Normalization") 
+```
+### We can compare the features after the normalization using histogram
+**Improved Skewness** *It is not perfect yet, but it is still better than raw data.*
+```{r}
+# Total Sales
+P1 = grid.arrange(p_ts,p_ts_lg)
+
+# Na Sales
+P2 = grid.arrange(p_na,p_na_lg)
+
+# Other Sales
+P3 = grid.arrange(p_ots,p_ots_sq)
+```
+
+
