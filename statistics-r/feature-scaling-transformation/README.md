@@ -21,9 +21,12 @@ In Normalization, we are changing the shape of the distribution of our data. Com
 `R` `tidyverse` `e1071` `ggplot2` `gridExtra`
 
 ## Files in this folder
-- `feature_scaling_transformation.md` and `feature_scaling_transformation.Rmd`
+- `feature_scaling_transformation.Rmd` — source code
+- **`feature_scaling_transformation.md` — rendered version with charts (view this for output)**
 
 ---
 Part of [Data Science Portfolio](https://github.com/rajesh-k07/data-science-portfolio/tree/main)
 
 **Main site:** [rajesh-k07.github.io](https://rajesh-k07.github.io)
+
+
