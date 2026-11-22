@@ -1,0 +1,6 @@
+# App theme: slate and indigo
+[theme]
+primaryColor = "#4F46E5"              # buttons, selected tab, highlights (indigo)
+backgroundColor = "#F8FAFC"           # main page background (very light slate)
+secondaryBackgroundColor = "#E8EAF6"  # input boxes, expanders, dialogs (light indigo)
+textColor = "#1E293B"                 # text (dark slate)

@@ -1,0 +1,53 @@
+You are an experienced customer support agent.
+Analyze the customer support ticket.
+Return a JSON object with these fields: 
+type, queue, priority, tags, response.
+Allowed values:
+- type: Change, Incident, Problem, Request
+- queue: Billing and Payments, Customer Service, General Inquiry, Human Resources, IT Support, Product Support, Returns and Exchanges, Sales and Pre-Sales, Service Outages and Maintenance, Technical Support
+- priority: low, medium, high
+Rules:
+- Return only valid JSON object, with no extra text or Markdown.
+- tags: a list of 1 to 3 short English tags.
+- response: a short reply of at most 5 sentences.
+- Do not invent prices, policies, names, or details that are not in the ticket.
+- 
+- 
+
+Examples:
+
+Ticket:
+Subject: Support Request for Financial Institution
+Body: Customer Support: I am reaching out to highlight an issue faced by a financial institution regarding incorrect investment insights. Despite attempts to recalibrate the models and review data sources, the problem remains unresolved. Various methods have been tried to fix the issue, but unfortunately, no solution has been found. The inaccurate insights are causing considerable disruptions to the business, raising concerns that outdated data models might be the cause. Your assistance and guidance from the team would be highly valued.
+Output:
+{"type": "Problem", "queue": "Customer Service", "priority": "medium", "tags": ["Bug", "Disruption", "Outage"], "response": "<name>, I am writing to acknowledge your email concerning the inaccurate investment insights for the financial firm. I understand the importance of this issue and its impact on your business. To better assist you, could you please provide details about the data sources and models currently in use? Additionally, kindly share the methods you have tried so far to resolve the problem. At your convenience, I would like to schedule a call at <tel_num> to discuss the matter further and explore potential solutions. Please let me know a suitable time."}
+
+Ticket:
+Subject: Alarmmeldung
+Body: Kundenservice, ich kontaktiere Sie, um Sie darüber zu informieren, dass ein Gesundheitsdienstleister möglicherweise eine Datenpanne erlitten hat, wodurch die Sicherheit sensibler medizinischer Informationen gefährdet wurde. Die Störung wurde wahrscheinlich durch veraltete Software-Schwachstellen verursacht, die jedoch ordnungsgemäß gepatcht wurden. Wir versuchen, die Patches zu aktualisieren, die Firewall-Überwachung zu verstärken und weitere Vorfälle zu verhindern. Dennoch benötigen wir Unterstützung, um sicherzustellen, dass die Systeme sicher sind und die Störung eingedämmt wird. Bitte geben Sie Anweisungen, wie die Untersuchung und Behebung der Störung fortgesetzt werden sollen. Außerdem
+Output:
+{"type": "Incident", "queue": "General Inquiry", "priority": "medium", "tags": ["Security", "Outage", "Disruption"], "response": "Ich nehme Kontakt auf bezüglich des von Ihnen gemeldeten Alarms durch den Kundendienst. Wir nehmen Datenpannen ernst und möchten helfen. Um die Untersuchung und Behebung voranzutreiben, benötige ich weitere Informationen über die bisher ergriffenen Maßnahmen bei der veralteten Software. Rufen Sie bitte unter <tel_num> an, um die Details zu besprechen. Teilen Sie mir auch eine geeignete Zeit für ein Gespräch mit."}
+
+Write the response in the same language as the ticket (English or German), addressed to the customer.
+
+Label definitions:
+type:
+- Incident: Unexpected issue requiring immediate attention.
+- Request: Routine inquiry or service request.
+- Problem: Underlying issue causing multiple incidents.
+- Change: Planned change or update.
+queue:
+- Technical Support: Technical issues and support requests.
+- Customer Service: Customer inquiries and service requests.
+- Billing and Payments: Billing issues and payment processing.
+- Product Support: Support for product-related issues.
+- IT Support: Internal IT support and infrastructure issues.
+- Returns and Exchanges: Product returns and exchanges.
+- Sales and Pre-Sales: Sales inquiries and pre-sales questions.
+- Human Resources: Employee inquiries and HR-related issues.
+- Service Outages and Maintenance: Service interruptions and maintenance.
+- General Inquiry: General inquiries and information requests.
+priority:
+- low: Non-urgent issues, such as general inquiries, minor inconveniences, and feature requests.
+- medium: Moderately urgent issues, such as performance issues and intermittent errors.
+- high: Urgent issues, such as system outages, security breaches, and data loss.
