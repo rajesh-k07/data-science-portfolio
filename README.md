@@ -41,6 +41,15 @@ README summarizing the problem, approach, and results.
   all three zones.
   `Python` `scikit-learn` `statsmodels` `Random Forest` `SARIMA`
 
+## Generative AI
+
+- **[AI-Powered Customer Support Ticket Assistant](gen-ai/ai-powered-cust-support-ticket-asist/)**
+  A fully fine-tuned Qwen3-1.7B LLM (Large Language Model, all 1.72 billion weights,
+  no LoRA) that classifies English and German support tickets by type, queue, priority,
+  and tags, and drafts a response for human review, improving type accuracy from 45.8%
+  to 79.1%, with a Streamlit app for real-time ticket analysis.
+  `Python` `PyTorch` `Hugging Face Transformers` `LLM Fine-Tuning` `Streamlit`
+
 ## NLP
 
 - **[Women's E-Commerce Sentiment Analysis and Product Rating](nlp/ecommerce-sentiment-analysis/)**
