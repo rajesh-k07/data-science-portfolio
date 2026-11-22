@@ -35,22 +35,22 @@ I ran six prompt experiments with the base Qwen3-1.7B model on 100 validation ti
 - **Memory:** full fine-tuning first ran out of GPU memory with the AdamW optimizer. The Adafactor optimizer, emptying the GPU cache every step, the newer gradient checkpointing method, and padding to multiples of 128 tokens brought peak memory down to 31.68 GB.
 - **Training:** took 5.13 hours. Epoch 2 had the lowest validation loss (0.8401) and was kept, because epoch 3 overfitted.
 
-<img src="app_screenshots/training-time.png" alt="Training time" width="600">
+<img src="app-screenshots/training-time.png" alt="Training time" width="600">
 
 **Training and validation results per epoch:**
 
-<img src="app_screenshots/training-result.png" alt="Training and validation results per epoch" width="700">
+<img src="app-screenshots/training-result.png" alt="Training and validation results per epoch" width="700">
 
 **Training and validation loss:** the training loss has a staircase shape, and the gap to the validation loss grows in epoch 3, which shows the overfitting.
 
-<img src="app_screenshots/training-vs-validation-loss.png" alt="Training and validation loss" width="700">
+<img src="app-screenshots/training-vs-validation-loss.png" alt="Training and validation loss" width="700">
 
 ## Results (301 Test Tickets)
 Both models were evaluated on the same test tickets with the same system prompt.
 
 **Base model vs. fine-tuned model:**
 
-<img src="app_screenshots/metric-base-fine-tuned.png" alt="Base model vs. fine-tuned model metrics" width="700">
+<img src="app-screenshots/metric-base-fine-tuned.png" alt="Base model vs. fine-tuned model metrics" width="700">
 
 - Type accuracy increased by 33 points, and tag F1 more than doubled.
 - Queue accuracy doubled, but it is only slightly above always predicting the most common queue (25.9%).
@@ -58,15 +58,15 @@ Both models were evaluated on the same test tickets with the same system prompt.
 
 **Results per language:** English and German tickets improved in the same way.
 
-<img src="app_screenshots/fine-tuning-base-vs-finetune-both-lang.png" alt="Base vs. fine-tuned results for English and German" width="700">
+<img src="app-screenshots/fine-tuning-base-vs-finetune-both-lang.png" alt="Base vs. fine-tuned results for English and German" width="700">
 
 **Queue errors of the fine-tuned model:** Billing and Payments is routed best (F1 0.62), while General Inquiry (F1 0.00) and IT Support (F1 0.10) are the weakest, because queues with overlapping topics are hard to separate.
 
-<img src="app_screenshots/confusion-matrix-fine-tuned-queue.png" alt="Queue confusion matrix of the fine-tuned model" width="650">
+<img src="app-screenshots/confusion-matrix-fine-tuned-queue.png" alt="Queue confusion matrix of the fine-tuned model" width="650">
 
 **Response similarity (ROUGE-L):** fine-tuning increased ROUGE-L from 0.192 to 0.288, with the largest gain for German tickets (0.099 to 0.259).
 
-<img src="app_screenshots/response-similarity-rogue-l.png" alt="Response similarity ROUGE-L" width="700">
+<img src="app-screenshots/response-similarity-rogue-l.png" alt="Response similarity ROUGE-L" width="700">
 
 ## Streamlit Application
 - **Analyze Ticket:** paste a ticket or load an example from the test set. The app shows the predicted type, queue, priority, and tags, a validation check (valid JSON and allowed labels), and an editable draft response.
@@ -75,52 +75,52 @@ Both models were evaluated on the same test tickets with the same system prompt.
 - **Transparency:** I added About the model and the System prompt view to make the AI chatbot transparent. The app also shows the raw model output (JSON), and has Responsible AI and Help sections.
 
 ### Screenshots- AI-Powered Customer Support Ticket Assistant 
-<img src="app_screenshots/ai-powered-cust-support-ticket-assist.png" alt="AI-Powered Customer Support Ticket Assistant" width="800">
+<img src="app-screenshots/ai-powered-cust-support-ticket-assist.png" alt="AI-Powered Customer Support Ticket Assistant" width="800">
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <img src="app_screenshots/new-ticket.png" alt="New Ticket" width="100%"><br>
+      <img src="app-screenshots/new-ticket.png" alt="New Ticket" width="100%"><br>
       <b>New ticket:</b> load an example ticket from the test set or paste the subject and body, then click Analyze ticket.
     </td>
     <td width="50%" valign="top">
-      <img src="app_screenshots/ai-prediction.png" alt="AI Prediction" width="100%"><br>
+      <img src="app-screenshots/ai-prediction.png" alt="AI Prediction" width="100%"><br>
       <b>AI prediction:</b> type, queue, priority, tags, the validation check, and the true labels for example tickets.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="app_screenshots/ai-draft-response.png" alt="AI Draft Response" width="100%"><br>
+      <img src="app-screenshots/ai-draft-response.png" alt="AI Draft Response" width="100%"><br>
       <b>AI draft response:</b> the agent edits the draft, replaces the flagged placeholders, and chooses the status.
     </td>
     <td width="50%" valign="top">
-      <img src="app_screenshots/approve-submit.png" alt="Approve and Submit" width="100%"><br>
+      <img src="app-screenshots/approve-submit.png" alt="Approve and Submit" width="100%"><br>
       <b>Approve and submit:</b> the ticket is saved to the local ticket log for demo, no email is sent.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="app_screenshots/submit-ticket.png" alt="Submitted Tickets" width="100%"><br>
+      <img src="app-screenshots/submit-ticket.png" alt="Submitted Tickets" width="100%"><br>
       <b>Submitted Tickets:</b> only the status can be changed; the ticket log can be downloaded as CSV.
     </td>
     <td width="50%" valign="top">
-      <img src="app_screenshots/analytics.png" alt="Analytics" width="100%"><br>
+      <img src="app-screenshots/analytics.png" alt="Analytics" width="100%"><br>
       <b>Analytics:</b> tickets processed, average generation time, responses edited by agent, Open / Closed, tickets per day.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="app_screenshots/about-model.png" alt="About the model" width="100%"><br>
+      <img src="app-screenshots/about-model.png" alt="About the model" width="100%"><br>
       <b>About the model:</b> a dialog pop-up from the "About the model" button.
     </td>
     <td width="50%" valign="top">
-      <img src="app_screenshots/responsible-ai.png" alt="Responsible AI" width="100%"><br>
+      <img src="app-screenshots/responsible-ai.png" alt="Responsible AI" width="100%"><br>
       <b>Responsible AI:</b> a dialog pop-up from the "Responsible AI" button.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="app_screenshots/help.png" alt="Help" width="100%"><br>
+      <img src="app-screenshots/help.png" alt="Help" width="100%"><br>
       <b>Help:</b> a dialog pop-up from the "Help" button.
     </td>
     <td width="50%"></td>
