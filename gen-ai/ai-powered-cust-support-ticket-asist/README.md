@@ -172,7 +172,7 @@ Full fine-tuning of a small open-weight model on 2400 tickets clearly improved t
 - `AI_Customer_Support_Fine_Tuned_Model.py`: model loading, generation, and JSON output checks
 - `.streamlit/config.toml`: app theme
 - `AI_Customer_Support_Ticket_Assistant.pptx`: project presentation with app screenshots
-
+- The full notebook of fine-tuned model is available on request.
 ---
 Part of [Data Science Portfolio](https://github.com/rajesh-k07/data-science-portfolio/tree/main)
 
